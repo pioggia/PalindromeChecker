@@ -4,8 +4,7 @@ public void setup()
   println("there are " + lines.length + " lines");
   for (int i=0; i < lines.length; i++) 
   {
-    System.out.println(convert(lines[i]));
-    if(palindrome(convert(lines[i]))==true)
+    if(palindrome(noSpaces(toLower(noPun(lines[i]))))==true)
     {
       println(lines[i] + " IS a palidrome.");
     }
@@ -15,47 +14,48 @@ public void setup()
     }
   }
 }
-public String convert(String word)
+public String noPun(String stanza)
 {
   String temp = "";
-  String converted = "";
   String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  for(int i=0; i<word.length(); i++)
+  for(int i=0; i<stanza.length(); i++)
   {
     for(int a=0; a<alphabet.length(); a++)
     {
-      if(word.substring(i, i+1).equals(alphabet.substring(a, a+1)) == true)
+      if(stanza.substring(i, i+1).equals(alphabet.substring(a, a+1)) == true)
       {
-        temp = temp + word.substring(i, i+1);
+        temp = temp + stanza.substring(i, i+1);
       }
     }
   }
-  for(int i=0; i<temp.length(); i++)
+  return temp;
+}
+public String toLower(String phrase)
+{
+  return phrase.toLowerCase();
+}
+public String noSpaces(String sWord)
+{
+  String temp = "";
+  for(int i=0; i<sWord.length(); i++)
   {
-    for(int c=25; c<alphabet.length()-1; c++)
-    {
-      if(temp.substring(i, i+1).equals(alphabet.substring(c, c+1)) == true)
-      {
-        converted = converted + alphabet.substring((alphabet.length()-c)/2, ((alphabet.length()-c)/2)+1);
-      }
-    }
+     if(sWord.substring(i, i+1).equals(" ") == false)
+     {
+        temp = temp + sWord.substring(i, i+1);
+     }
   }
-  return converted;
+  return temp;
 }
 public boolean palindrome(String word)
 {
-  String two = "";
-  for(int i=word.length(); i<0; i--)
+  String temp = "";
+  for(int i = word.length()-1; i>=0; i--) //reverses word
   {
-    two = two + word.substring(i, i+1);
+    temp = temp + word.substring(i, i+1);
   }
-  if(two.equals(word))
+  if(temp.equals(word))
   {
     return true;
   }
-  else 
-  {
-    return false;
-  }
+  return false;
 }
-
